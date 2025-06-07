@@ -1,6 +1,6 @@
 # Task ID: 2
 # Title: Docker 컨테이너 환경 구성
-# Status: pending
+# Status: done
 # Dependencies: 1
 # Priority: high
 # Description: PostgreSQL, Redis 등 필요한 서비스들의 Docker 환경 설정

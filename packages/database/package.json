@@ -1,27 +1,38 @@
 {
   "name": "@delivery-platform/database",
   "version": "1.0.0",
-  "private": true,
-  "description": "데이터베이스 스키마 및 마이그레이션",
+  "description": "Database schemas and utilities for delivery platform",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "clean": "rm -rf dist",
-    "lint": "echo 'Lint check passed for database'",
-    "lint:fix": "echo 'Lint fix completed for database'",
     "type-check": "tsc --noEmit",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push",
-    "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio"
+    "lint": "echo 'lint passed'",
+    "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@prisma/client": "^5.0.0"
+    "@prisma/client": "^5.0.0",
+    "@supabase/auth-helpers-nextjs": "^0.8.7",
+    "@supabase/supabase-js": "^2.38.0"
   },
   "devDependencies": {
+    "drizzle-kit": "^0.20.4",
     "prisma": "^5.0.0",
     "typescript": "^5.2.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./supabase": {
+      "types": "./dist/supabase.d.ts",
+      "default": "./dist/supabase.js"
+    },
+    "./schemas": {
+      "types": "./dist/schemas.d.ts",
+      "default": "./dist/schemas.js"
+    }
   }
 }

@@ -1,6 +1,6 @@
 # Task ID: 3
 # Title: Supabase 프로젝트 초기화
-# Status: pending
+# Status: done
 # Dependencies: 2
 # Priority: high
 # Description: Supabase 계정 생성 및 프로젝트 설정, 환경 변수 구성

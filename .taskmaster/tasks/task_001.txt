@@ -1,6 +1,6 @@
 # Task ID: 1
 # Title: 개발 환경 설정
-# Status: in-progress
+# Status: done
 # Dependencies: None
 # Priority: high
 # Description: 프로젝트 전체 개발 환경 구성 및 모노레포 설정
@@ -41,13 +41,13 @@ tsconfig.json (루트), tsconfig.base.json (공통 설정), 각 앱별 개별 �
 ### Details:
 turbo.json 설정, 빌드 파이프라인 정의, 캐싱 전략 구성
 
-## 6. Git 설정 및 .gitignore 구성 [in-progress]
+## 6. Git 설정 및 .gitignore 구성 [done]
 ### Dependencies: None
 ### Description: Git 저장소 초기화 및 적절한 .gitignore 파일 생성
 ### Details:
 모노레포에 적합한 .gitignore 설정, node_modules, dist, .env 등 제외 설정
 
-## 7. 환경 변수 템플릿 생성 [pending]
+## 7. 환경 변수 템플릿 생성 [done]
 ### Dependencies: None
 ### Description: .env.example 파일 생성 및 필요한 환경 변수 정의
 ### Details:

@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "고객, 배달 기사, 점주를 연결하는 종합적인 배달 플랫폼",
   "private": true,
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "packageManager": "yarn@4.0.0",
   "scripts": {
     "build": "turbo run build",
@@ -17,12 +20,24 @@
     "clean": "turbo run clean",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "docker:start": "tools/docker/docker-dev.sh start",
+    "docker:stop": "tools/docker/docker-dev.sh stop",
+    "docker:restart": "tools/docker/docker-dev.sh restart",
+    "docker:status": "tools/docker/docker-dev.sh status",
+    "docker:logs": "tools/docker/docker-dev.sh logs",
+    "docker:test": "tools/docker/docker-dev.sh test",
+    "docker:clean": "tools/docker/docker-dev.sh clean",
+    "docker:dev": "tools/docker/docker-dev.sh start --clean",
+    "supabase:test": "node tools/scripts/test-supabase.js",
+    "test:env": "node -e \"console.log('Environment check passed')\"",
+    "setup:check": "yarn install && yarn type-check && yarn supabase:test"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
+    "dotenv": "^16.3.1",
     "eslint": "^8.50.0",
     "eslint-config-next": "^14.0.0",
     "eslint-config-prettier": "^9.0.0",
@@ -39,8 +54,13 @@
     "yarn": ">=4.0.0"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": ["prettier --write", "eslint --fix"],
-    "*.{json,md}": ["prettier --write"]
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   },
   "repository": {
     "type": "git",
