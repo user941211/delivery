@@ -1,0 +1,11 @@
+# Task ID: 26
+# Title: 고급 결제 시스템
+# Status: pending
+# Dependencies: 16
+# Priority: medium
+# Description: 다양한 결제 수단 및 할인/쿠폰 시스템
+# Details:
+간편결제 연동, 쿠폰 시스템, 포인트 적립, 부분 환불, 정기 결제 지원
+
+# Test Strategy:
+다양한 결제 방식 테스트, 할인 계산 검증, 환불 프로세스 확인

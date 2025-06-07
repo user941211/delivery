@@ -1,0 +1,11 @@
+# Task ID: 12
+# Title: 메뉴 관리 시스템
+# Status: pending
+# Dependencies: 11
+# Priority: high
+# Description: 레스토랑 메뉴 등록, 수정, 삭제 및 옵션 관리 기능
+# Details:
+메뉴 항목 관리, 가격 설정, 옵션 그룹 관리, 메뉴 이미지 업로드, 품절 관리
+
+# Test Strategy:
+메뉴 CRUD 테스트, 옵션 조합 검증, 이미지 업로드 확인

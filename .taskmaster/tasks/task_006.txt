@@ -1,0 +1,11 @@
+# Task ID: 6
+# Title: Nest.js API 서버 설정
+# Status: pending
+# Dependencies: 1, 2
+# Priority: high
+# Description: Nest.js 백엔드 API 서버 초기 설정 및 기본 구조 생성
+# Details:
+Nest.js 프로젝트 생성, TypeScript 설정, Prisma ORM 설정, 기본 모듈 구조 생성, Swagger 문서화 설정
+
+# Test Strategy:
+API 서버 실행 및 기본 엔드포인트 호출 확인, Swagger 문서 접근 테스트

@@ -1,0 +1,11 @@
+# Task ID: 15
+# Title: 주문 생성 시스템
+# Status: pending
+# Dependencies: 14
+# Priority: high
+# Description: 장바구니 기반 주문 생성 및 초기 처리
+# Details:
+주문 정보 검증, 주문 생성, 주문 상태 관리, 배달비 계산, 알림 발송
+
+# Test Strategy:
+주문 생성 프로세스 테스트, 가격 계산 검증, 상태 변경 확인

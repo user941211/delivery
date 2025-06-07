@@ -1,0 +1,11 @@
+# Task ID: 8
+# Title: 공통 타입 및 유틸리티 패키지
+# Status: pending
+# Dependencies: 7
+# Priority: medium
+# Description: 프론트엔드와 백엔드에서 공유할 타입 정의 및 유틸리티 함수 작성
+# Details:
+TypeScript 인터페이스 정의, 공통 상수, 유틸리티 함수, 유효성 검사 스키마 작성
+
+# Test Strategy:
+타입 검사 및 유틸리티 함수 단위 테스트

@@ -1,0 +1,84 @@
+배달 플랫폼 개발 가이드
+
+1. 전체 아키텍처 개요
+   고객, 배달 기사, 점주 역할을 지원하는 배달 플랫폼은 프론트엔드(Next.js 웹앱, Expo 모바일앱)와 백엔드(Nest.js API 서버), 데이터베이스(PostgreSQL)로 구성됩니다. 클라이언트들은 REST/GraphQL API 또는 WebSocket을 통해 백엔드와 통신하며, Firebase/Supabase 같은 BaaS를 보조적으로 활용합니다.
+
+2. 기술 스택 및 역할
+
+* Next.js: 서버 사이드 렌더링(SSR), 정적 사이트 생성(SSG)을 지원하는 웹 프레임워크
+* Expo: React Native 기반 크로스플랫폼 모바일/태블릿 앱
+* Nest.js: 모듈화된 구조의 Node.js 백엔드 프레임워크
+* PostgreSQL: 트랜잭션과 지리공간 확장을 지원하는 관계형 DB
+* Firebase/Supabase(선택): 인증, 실시간 데이터, 푸시 알림, Storage 등 BaaS
+
+3. 프론트엔드 구성 및 디바이스 대응
+
+* 모노레포 구조(Yarn Workspaces, Nx)로 Next.js와 Expo 프로젝트 관리
+* 반응형 웹 디자인: Tailwind CSS 또는 CSS-in-JS + 미디어 쿼리
+* Expo 앱: Flexbox, useWindowDimensions, nativewind/Styled-components
+* 공용 컴포넌트 및 유틸은 별도 패키지로 분리
+
+4. 백엔드 구조
+
+* 모듈 설계: AuthModule, UsersModule, OrdersModule, RestaurantsModule, DeliveryModule, ChatModule 등
+* 계층형 아키텍처: Controller → Service → Repository
+* 미들웨어/가드/파이프로 공통기능(로깅, 인증, DTO 검증) 처리
+
+5. 데이터베이스 스키마 예시
+
+* Users(user\_id, email, password, name, phone, role)
+* Restaurants(restaurant\_id, owner\_id, name, address, category)
+* MenuItems(menu\_id, restaurant\_id, name, price, image\_url)
+* Orders(order\_id, customer\_id, restaurant\_id, driver\_id, status, total\_price)
+* OrderItems(order\_id, menu\_id, quantity)
+* Drivers(driver\_id, name, phone, vehicle\_info, current\_location)
+* Payments(payment\_id, order\_id, method, amount, status)
+* Reviews(review\_id, order\_id, restaurant\_id, customer\_id, score, comment)
+* ChatMessages(message\_id, order\_id, sender\_id, receiver\_id, message\_text, timestamp)
+* DeliveryLocations(track\_id, order\_id, driver\_id, latitude, longitude, timestamp)
+
+6. 주요 기능별 모듈
+
+* 회원가입/로그인: JWT 기반 인증, Passport-JWT, 역할 기반(RBAC)
+* 주문/배달 처리: 상태 머신(PLACED→ACCEPTED→PICKED\_UP→DELIVERED), 배차 로직, 매칭 서비스
+* 실시간 위치 추적: Socket.io 기반 WebSocket, 또는 Poling/REST API
+* 채팅: 주문별 room, WebSocket 게이트웨이, 메시지 DB 저장
+* 푸시 알림: Expo Notifications 또는 Firebase FCM, Web Push
+* 리뷰/평점: 주문 완료 후 리뷰 작성, 평균 평점 계산 및 표시
+
+7. 라이브러리/툴 추천
+
+* UI(Web): Chakra UI, MUI, Tailwind CSS
+* UI(Mobile): NativeBase, React Native Paper, Dripsy
+* 네비게이션: Next/Link, React Navigation
+* 상태/데이터: React Query, SWR, Redux Toolkit, Zustand
+* 폼: React Hook Form, Yup
+* 지도: Leaflet, Google Maps API, react-native-maps
+* ORM: TypeORM 또는 Prisma
+* 인증: @nestjs/jwt, bcrypt/argon2, Passport
+* 검증: class-validator, class-transformer
+* 실시간: @nestjs/websockets + Socket.io, Redis 어댑터
+* 작업 큐: @nestjs/schedule, BullMQ
+* 테스트: Jest, e2e 테스트, Cypress/Playwright
+
+8. 배포 및 환경 구성
+
+* 로컬: Docker Compose(PostgreSQL), npm start(dev), Expo start
+* 스테이징: AWS RDS, Preview 배포( Vercel, Heroku ), CI/CD(GitHub Actions)
+* 프로덕션
+
+  * 웹: Vercel 자동배포
+  * 백엔드: AWS EC2/ECS/Beanstalk 또는 Railway/Render
+  * DB: AWS RDS 또는 Supabase 호스팅
+  * 환경 변수: AWS Secrets Manager, Vercel Env Settings
+  * 모니터링: Sentry, CloudWatch, NewRelic
+
+9. 운영 전략
+
+* 무상태(stateless) API 설계로 수평 확장
+* WebSocket: 여러 인스턴스 간 Redis 어댑터 사용
+* 정적 파일: S3 + CDN
+* 배포 자동화: CI/CD + Docker
+* 로깅/모니터링: 중앙집중 로깅(CloudWatch, ELK), APM
+
+※ 개발 초기에는 단일 레포(monolith)로 시작하되, 모듈화/분리 전략을 염두에 두고 추후 마이크로서비스로 전환 가능하도록 설계합니다.

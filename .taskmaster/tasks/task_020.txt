@@ -1,0 +1,11 @@
+# Task ID: 20
+# Title: 기본 UI/UX 구현 - 웹
+# Status: pending
+# Dependencies: 4, 9, 13, 14, 15
+# Priority: medium
+# Description: Next.js 웹 애플리케이션의 핵심 사용자 인터페이스
+# Details:
+로그인/회원가입 페이지, 레스토랑 목록, 메뉴 상세, 장바구니, 주문하기 페이지 구현
+
+# Test Strategy:
+사용자 워크플로우 테스트, 반응형 디자인 확인, 접근성 검증

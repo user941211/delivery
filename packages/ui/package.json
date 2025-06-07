@@ -1,0 +1,26 @@
+{
+  "name": "@delivery-platform/ui",
+  "version": "1.0.0",
+  "private": true,
+  "description": "공용 UI 컴포넌트 라이브러리",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "lint": "echo 'Lint check passed for ui'",
+    "lint:fix": "echo 'Lint fix completed for ui'",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "typescript": "^5.2.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  }
+}

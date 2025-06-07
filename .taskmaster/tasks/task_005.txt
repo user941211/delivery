@@ -1,0 +1,11 @@
+# Task ID: 5
+# Title: Expo 모바일 프로젝트 설정
+# Status: pending
+# Dependencies: 1
+# Priority: medium
+# Description: Expo React Native 기반 모바일 애플리케이션 초기 설정
+# Details:
+Expo 프로젝트 생성, TypeScript 설정, NativeWind 설정, Expo Router 설정, 기본 네비게이션 구조
+
+# Test Strategy:
+Expo 개발 서버 실행 및 시뮬레이터에서 앱 실행 확인

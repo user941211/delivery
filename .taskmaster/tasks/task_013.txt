@@ -1,0 +1,11 @@
+# Task ID: 13
+# Title: 고객용 레스토랑 검색
+# Status: pending
+# Dependencies: 11, 12
+# Priority: high
+# Description: 위치 기반 레스토랑 검색 및 필터링 기능 구현
+# Details:
+지역별 검색, 카테고리 필터, 평점 정렬, 거리 계산, 영업 상태 표시
+
+# Test Strategy:
+검색 API 테스트, 필터링 로직 검증, 거리 계산 정확도 확인

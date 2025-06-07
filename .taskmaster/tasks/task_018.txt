@@ -1,0 +1,11 @@
+# Task ID: 18
+# Title: 배달기사 등록 시스템
+# Status: pending
+# Dependencies: 9, 10
+# Priority: medium
+# Description: 배달기사 신청 및 승인 프로세스 구현
+# Details:
+배달기사 신청서 작성, 서류 업로드, 승인 프로세스, 차량 정보 등록, 배달 구역 설정
+
+# Test Strategy:
+신청 프로세스 테스트, 서류 업로드 확인, 승인/거부 워크플로우

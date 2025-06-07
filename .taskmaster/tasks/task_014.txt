@@ -1,0 +1,11 @@
+# Task ID: 14
+# Title: 장바구니 시스템
+# Status: pending
+# Dependencies: 12, 13
+# Priority: medium
+# Description: 고객용 장바구니 기능 및 주문 임시 저장
+# Details:
+장바구니 추가/삭제/수정, 옵션 선택, 수량 조절, 가격 계산, 세션 관리
+
+# Test Strategy:
+장바구니 조작 테스트, 가격 계산 정확도, 세션 유지 확인

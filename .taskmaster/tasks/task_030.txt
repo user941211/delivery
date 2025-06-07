@@ -1,0 +1,11 @@
+# Task ID: 30
+# Title: 배포 환경 구성
+# Status: pending
+# Dependencies: 29
+# Priority: high
+# Description: 프로덕션 배포를 위한 인프라 설정
+# Details:
+CI/CD 파이프라인, Docker 이미지 빌드, 환경별 설정, 도메인 연결, SSL 인증서
+
+# Test Strategy:
+배포 프로세스 테스트, 환경별 동작 확인, SSL 연결 검증

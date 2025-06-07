@@ -1,0 +1,11 @@
+# Task ID: 31
+# Title: 보안 강화
+# Status: pending
+# Dependencies: 30
+# Priority: high
+# Description: 프로덕션 환경 보안 설정 및 취약점 점검
+# Details:
+HTTPS 강제, Rate Limiting, SQL Injection 방어, XSS 방어, 민감 정보 암호화
+
+# Test Strategy:
+보안 스캔, 취약점 테스트, 암호화 확인

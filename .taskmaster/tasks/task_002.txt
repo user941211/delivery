@@ -1,0 +1,11 @@
+# Task ID: 2
+# Title: Docker 컨테이너 환경 구성
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: PostgreSQL, Redis 등 필요한 서비스들의 Docker 환경 설정
+# Details:
+docker-compose.yml 작성, PostgreSQL 15+ 컨테이너, Redis 7+ 컨테이너, Adminer 관리 도구 설정
+
+# Test Strategy:
+Docker Compose 실행 후 각 서비스 연결 테스트 및 데이터베이스 접근 확인

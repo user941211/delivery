@@ -1,0 +1,11 @@
+# Task ID: 17
+# Title: 점주용 주문 관리
+# Status: pending
+# Dependencies: 15, 16
+# Priority: high
+# Description: 점주가 주문을 확인하고 처리할 수 있는 시스템
+# Details:
+주문 접수, 조리 시간 설정, 주문 상태 업데이트, 주문 거부 기능, 특이사항 처리
+
+# Test Strategy:
+주문 처리 워크플로우 테스트, 상태 변경 알림 확인

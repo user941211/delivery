@@ -1,0 +1,11 @@
+# Task ID: 11
+# Title: 레스토랑 관리 시스템
+# Status: pending
+# Dependencies: 9, 10
+# Priority: high
+# Description: 점주용 레스토랑 등록 및 관리 기능 구현
+# Details:
+레스토랑 등록, 정보 수정, 영업시간 설정, 카테고리 관리, 이미지 업로드
+
+# Test Strategy:
+레스토랑 CRUD 기능 테스트, 영업시간 로직 검증

@@ -1,0 +1,11 @@
+# Task ID: 21
+# Title: 기본 UI/UX 구현 - 모바일
+# Status: pending
+# Dependencies: 5, 9, 13, 14, 15
+# Priority: medium
+# Description: Expo 모바일 애플리케이션의 핵심 사용자 인터페이스
+# Details:
+로그인/회원가입 화면, 레스토랑 목록, 메뉴 상세, 장바구니, 주문하기 화면 구현
+
+# Test Strategy:
+모바일 UX 테스트, 다양한 기기 크기 대응 확인, 터치 인터랙션 검증

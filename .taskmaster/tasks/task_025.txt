@@ -1,0 +1,11 @@
+# Task ID: 25
+# Title: 푸시 알림 시스템
+# Status: pending
+# Dependencies: 21, 22
+# Priority: medium
+# Description: 주요 이벤트에 대한 모바일/웹 푸시 알림
+# Details:
+Expo Notifications 설정, FCM 연동, 알림 템플릿, 알림 권한 관리, 알림 설정
+
+# Test Strategy:
+다양한 이벤트 알림 확인, 권한 처리, 알림 클릭 동작 테스트

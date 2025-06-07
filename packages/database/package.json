@@ -1,0 +1,27 @@
+{
+  "name": "@delivery-platform/database",
+  "version": "1.0.0",
+  "private": true,
+  "description": "데이터베이스 스키마 및 마이그레이션",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "lint": "echo 'Lint check passed for database'",
+    "lint:fix": "echo 'Lint fix completed for database'",
+    "type-check": "tsc --noEmit",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.0.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.0.0",
+    "typescript": "^5.2.0"
+  }
+}

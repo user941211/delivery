@@ -1,0 +1,11 @@
+# Task ID: 19
+# Title: 기본 배달 배정 시스템
+# Status: pending
+# Dependencies: 17, 18
+# Priority: high
+# Description: 주문과 배달기사 간의 기본적인 매칭 시스템
+# Details:
+거리 기반 배달기사 찾기, 수동 배정, 배달 요청 전송, 수락/거부 처리
+
+# Test Strategy:
+배달기사 매칭 로직 테스트, 요청/응답 처리 확인

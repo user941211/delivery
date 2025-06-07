@@ -1,0 +1,11 @@
+# Task ID: 22
+# Title: 실시간 주문 상태 추적
+# Status: pending
+# Dependencies: 6, 17, 19
+# Priority: high
+# Description: WebSocket 기반 실시간 주문 상태 업데이트 시스템
+# Details:
+Socket.io 설정, 주문 상태 변경 이벤트 발송, 클라이언트 실시간 업데이트, 연결 관리
+
+# Test Strategy:
+실시간 업데이트 확인, 연결 끊김 처리, 다중 클라이언트 테스트

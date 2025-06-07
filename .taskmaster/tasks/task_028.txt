@@ -1,0 +1,11 @@
+# Task ID: 28
+# Title: 관리자 대시보드
+# Status: pending
+# Dependencies: 11, 18, 27
+# Priority: low
+# Description: 플랫폼 관리를 위한 관리자 전용 대시보드
+# Details:
+사용자 관리, 레스토랑 승인, 배달기사 관리, 통계 조회, 신고 처리
+
+# Test Strategy:
+관리 기능 테스트, 통계 정확도, 권한 제어 확인

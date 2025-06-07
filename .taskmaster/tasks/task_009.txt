@@ -1,0 +1,11 @@
+# Task ID: 9
+# Title: 사용자 인증 시스템
+# Status: pending
+# Dependencies: 6, 7, 8
+# Priority: high
+# Description: JWT 기반 사용자 인증 및 권한 관리 시스템 구현
+# Details:
+회원가입, 로그인, 토큰 갱신, 역할 기반 접근 제어 (Customer, Driver, RestaurantOwner) 구현
+
+# Test Strategy:
+각 역할별 회원가입/로그인 테스트, 토큰 유효성 검증, 권한별 API 접근 테스트

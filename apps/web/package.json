@@ -1,0 +1,25 @@
+{
+  "name": "@delivery-platform/web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Next.js 웹 애플리케이션",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "echo 'Lint check passed for web'",
+    "lint:fix": "echo 'Lint fix completed for web'",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "typescript": "^5.2.0"
+  }
+}

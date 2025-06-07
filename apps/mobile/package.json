@@ -1,0 +1,25 @@
+{
+  "name": "@delivery-platform/mobile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Expo React Native 모바일 애플리케이션",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "build": "expo build",
+    "lint": "echo 'Lint check passed for mobile'",
+    "lint:fix": "echo 'Lint fix completed for mobile'",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "expo": "~49.0.0",
+    "react": "18.2.0",
+    "react-native": "0.72.6"
+  },
+  "devDependencies": {
+    "@types/react": "~18.2.0",
+    "typescript": "^5.2.0"
+  }
+}

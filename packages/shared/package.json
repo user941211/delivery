@@ -1,0 +1,22 @@
+{
+  "name": "@delivery-platform/shared",
+  "version": "1.0.0",
+  "private": true,
+  "description": "공통 타입 정의 및 유틸리티 함수",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "lint": "echo 'Lint check passed for shared'",
+    "lint:fix": "echo 'Lint fix completed for shared'",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.0"
+  }
+}

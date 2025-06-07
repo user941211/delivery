@@ -1,0 +1,55 @@
+# Task ID: 1
+# Title: 개발 환경 설정
+# Status: in-progress
+# Dependencies: None
+# Priority: high
+# Description: 프로젝트 전체 개발 환경 구성 및 모노레포 설정
+# Details:
+Yarn Workspaces 기반 모노레포 구조 생성, Docker Compose 설정, 기본 패키지 설치 및 설정 파일 구성
+
+# Test Strategy:
+로컬 개발 환경에서 모든 프로젝트가 정상적으로 빌드되고 실행되는지 확인
+
+# Subtasks:
+## 1. 모노레포 기본 구조 생성 [done]
+### Dependencies: None
+### Description: apps/, packages/, tools/ 폴더를 포함한 기본 디렉토리 구조 생성
+### Details:
+배달 플랫폼 모노레포의 핵심 폴더 구조를 생성합니다. apps/ (web, mobile, api), packages/ (shared, ui, database), tools/ (scripts, config)
+
+## 2. 루트 package.json 및 Yarn Workspaces 설정 [done]
+### Dependencies: None
+### Description: 프로젝트 루트에 package.json 생성 및 Yarn Workspaces 설정
+### Details:
+모노레포 관리를 위한 루트 package.json 설정, workspaces 패턴 정의, 공통 dependencies 관리
+
+## 3. TypeScript 공통 설정 [done]
+### Dependencies: None
+### Description: 모노레포 전체에서 사용할 TypeScript 설정 파일 구성
+### Details:
+tsconfig.json (루트), tsconfig.base.json (공통 설정), 각 앱별 개별 설정 파일
+
+## 4. ESLint/Prettier 공통 설정 [done]
+### Dependencies: None
+### Description: 코드 품질 및 포맷팅을 위한 ESLint, Prettier 설정
+### Details:
+.eslintrc.js, .prettierrc, .prettierignore 설정 및 공통 규칙 적용
+
+## 5. 빌드 도구 설정 (Turbo) [done]
+### Dependencies: None
+### Description: 모노레포 빌드 최적화를 위한 Turbo 설정
+### Details:
+turbo.json 설정, 빌드 파이프라인 정의, 캐싱 전략 구성
+
+## 6. Git 설정 및 .gitignore 구성 [in-progress]
+### Dependencies: None
+### Description: Git 저장소 초기화 및 적절한 .gitignore 파일 생성
+### Details:
+모노레포에 적합한 .gitignore 설정, node_modules, dist, .env 등 제외 설정
+
+## 7. 환경 변수 템플릿 생성 [pending]
+### Dependencies: None
+### Description: .env.example 파일 생성 및 필요한 환경 변수 정의
+### Details:
+데이터베이스, Supabase, JWT, 결제 API 등 필요한 환경 변수 템플릿 작성
+
