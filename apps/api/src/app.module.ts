@@ -16,6 +16,9 @@ import { RealtimeModule } from './realtime/realtime.module';
 import { DeliveryModule } from './delivery/delivery.module';
 import { TrackingModule } from './tracking/tracking.module';
 import { ChatModule } from './chat/chat.module';
+import { ReviewsModule } from './reviews/reviews.module';
+import { MonitoringModule } from './monitoring/monitoring.module';
+import { AdminModule } from './admin/admin.module';
 
 /**
  * 배달 플랫폼 API 서버의 루트 모듈
@@ -25,6 +28,8 @@ import { ChatModule } from './chat/chat.module';
  * - 요청 제한 (Rate Limiting)
  * - 모듈별 라우팅 관리
  * - 실시간 통신 (WebSocket)
+ * - 시스템 모니터링 및 로깅
+ * - 관리자 대시보드
  */
 @Module({
   imports: [
@@ -61,6 +66,9 @@ import { ChatModule } from './chat/chat.module';
     DeliveryModule,
     TrackingModule,
     ChatModule,
+    ReviewsModule, // 리뷰 및 평점 시스템
+    MonitoringModule, // 시스템 모니터링 및 로깅
+    AdminModule, // 관리자 대시보드
   ],
   controllers: [AppController],
   providers: [AppService],
