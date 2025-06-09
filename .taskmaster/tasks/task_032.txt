@@ -1,6 +1,6 @@
 # Task ID: 32
 # Title: 모니터링 시스템
-# Status: pending
+# Status: done
 # Dependencies: 30, 31
 # Priority: medium
 # Description: 시스템 모니터링 및 로깅 설정

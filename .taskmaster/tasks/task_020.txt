@@ -1,6 +1,6 @@
 # Task ID: 20
 # Title: 기본 UI/UX 구현 - 웹
-# Status: pending
+# Status: done
 # Dependencies: 4, 9, 13, 14, 15
 # Priority: medium
 # Description: Next.js 웹 애플리케이션의 핵심 사용자 인터페이스
@@ -9,3 +9,53 @@
 
 # Test Strategy:
 사용자 워크플로우 테스트, 반응형 디자인 확인, 접근성 검증
+
+# Subtasks:
+## 1. 공통 UI 컴포넌트 라이브러리 구축 [done]
+### Dependencies: None
+### Description: 재사용 가능한 UI 컴포넌트들 (Button, Input, Card, Modal 등) 구현
+### Details:
+Tailwind CSS와 Radix UI 기반으로 일관된 디자인 시스템 구축
+
+## 2. 고객용 메인 페이지 및 레스토랑 검색 [done]
+### Dependencies: None
+### Description: 홈페이지, 레스토랑 검색, 필터링, 카테고리 브라우징 UI 구현
+### Details:
+지도 기반 검색, 카테고리별 필터링, 평점/리뷰 표시 기능 포함
+
+## 3. 메뉴 상세 및 주문 페이지 [done]
+### Dependencies: None
+### Description: 레스토랑 메뉴, 상품 상세, 옵션 선택, 장바구니 UI 구현
+### Details:
+메뉴 옵션 선택, 수량 조절, 가격 계산, 장바구니 담기 기능
+
+## 4. 주문 결제 및 주문 추적 페이지 [done]
+### Dependencies: None
+### Description: 결제 프로세스, 주문 확인, 실시간 주문 상태 추적 UI 구현
+### Details:
+결제 수단 선택, 주소 입력, 실시간 상태 업데이트, 배달 추적 지도
+
+## 5. 점주용 레스토랑 관리 대시보드 [done]
+### Dependencies: None
+### Description: 점주가 레스토랑 정보, 메뉴, 주문을 관리할 수 있는 대시보드 UI
+### Details:
+레스토랑 정보 수정, 메뉴 CRUD, 주문 접수/처리, 매출 통계 화면
+
+## 6. 관리자용 플랫폼 관리 페이지 [done]
+### Dependencies: None
+### Description: 관리자가 전체 플랫폼을 관리할 수 있는 어드민 페이지 UI
+### Details:
+사용자 관리, 레스토랑 승인, 주문 모니터링, 시스템 통계 대시보드
+
+## 7. 사용자 계정 및 프로필 관리 페이지 [done]
+### Dependencies: None
+### Description: 로그인, 회원가입, 프로필 수정, 주문 히스토리 페이지 UI
+### Details:
+인증 폼, 프로필 편집, 주소 관리, 주문 내역, 리뷰 관리 화면
+
+## 8. 반응형 디자인 및 UX 최적화 [done]
+### Dependencies: None
+### Description: 모바일, 태블릿, 데스크톱 대응 반응형 디자인 및 사용성 개선
+### Details:
+Breakpoint 설정, 터치 최적화, 로딩 상태, 에러 핸들링, 접근성 개선
+

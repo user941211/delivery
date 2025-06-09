@@ -1,6 +1,6 @@
 # Task ID: 27
 # Title: 리뷰 및 평점 시스템
-# Status: pending
+# Status: done
 # Dependencies: 15, 19
 # Priority: low
 # Description: 주문 완료 후 리뷰 작성 및 평점 관리

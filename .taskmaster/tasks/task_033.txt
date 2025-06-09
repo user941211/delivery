@@ -9,3 +9,53 @@
 
 # Test Strategy:
 전체 시스템 종합 테스트, 사용자 시나리오 검증, 버그 리포트 및 수정
+
+# Subtasks:
+## 1. 백엔드 단위 테스트 구현 [done]
+### Dependencies: None
+### Description: Nest.js API 서비스, 컨트롤러, 모듈별 단위 테스트 구현
+### Details:
+- 각 서비스 클래스별 단위 테스트 작성\n- 컨트롤러 엔드포인트 테스트\n- 모킹 및 의존성 주입 테스트\n- Jest 테스트 프레임워크 활용\n- 테스트 커버리지 80% 이상 달성
+
+## 2. 프론트엔드 단위 테스트 구현 [done]
+### Dependencies: None
+### Description: React 컴포넌트, 훅, 유틸리티 함수 테스트 구현
+### Details:
+- React 컴포넌트 렌더링 및 상호작용 테스트\n- 커스텀 훅 테스트\n- 유틸리티 함수 단위 테스트\n- React Testing Library 및 Jest 활용\n- 스냅샷 테스트 포함
+
+## 3. API 통합 테스트 구현 [done]
+### Dependencies: 33.1
+### Description: 전체 API 엔드포인트 통합 테스트 및 데이터 플로우 검증
+### Details:
+- REST API 엔드포인트별 통합 테스트\n- 데이터베이스 연동 테스트\n- 실시간 통신 (WebSocket) 테스트\n- 에러 핸들링 및 응답 검증\n- Supertest 및 Jest 활용
+
+## 4. E2E 테스트 구현 [pending]
+### Dependencies: 33.2, 33.3
+### Description: 웹 및 모바일 앱의 전체 사용자 플로우 테스트
+### Details:
+- 주요 사용자 시나리오 E2E 테스트\n- 주문 프로세스 전체 플로우 테스트\n- 웹앱 Playwright/Cypress 테스트\n- 모바일앱 Detox 테스트\n- 크로스 브라우저 테스트
+
+## 5. 성능 테스트 및 최적화 [done]
+### Dependencies: 33.3
+### Description: 로드 테스트, 응답 시간 측정, 병목 지점 식별 및 개선
+### Details:
+- API 응답 시간 성능 테스트\n- 동시 사용자 로드 테스트\n- 데이터베이스 쿼리 성능 분석\n- 프론트엔드 렌더링 성능 측정\n- Artillery, K6, Lighthouse 활용
+
+## 6. 보안 테스트 및 취약점 점검 [done]
+### Dependencies: 33.3
+### Description: 인증/권한, API 보안, 데이터 보호 검증
+### Details:
+- JWT 토큰 보안 검증\n- API 권한 및 접근 제어 테스트\n- SQL 인젝션 및 XSS 취약점 점검\n- 개인정보 보호 및 데이터 암호화 검증\n- OWASP 보안 가이드라인 준수 확인
+
+## 7. 사용자 수용 테스트 (UAT) [pending]
+### Dependencies: 33.4
+### Description: 실제 사용자 시나리오 기반 테스트 및 피드백 수집
+### Details:
+- 실제 사용자 시나리오 기반 테스트 계획 수립\n- 고객, 점주, 배달기사 역할별 UAT 수행\n- 사용성 및 UX 개선점 식별\n- 버그 리포트 및 개선사항 문서화\n- 실제 데이터를 활용한 테스트
+
+## 8. 테스트 자동화 및 CI/CD 통합 [done]
+### Dependencies: 33.5, 33.6, 33.7
+### Description: 테스트 스위트 자동화 및 지속적인 품질 관리 시스템 구축
+### Details:
+- GitHub Actions CI/CD 파이프라인 테스트 통합\n- 자동화된 테스트 실행 및 리포팅\n- 코드 커버리지 측정 및 품질 게이트 설정\n- 테스트 결과 대시보드 구축\n- 지속적인 품질 모니터링 체계 구축
+

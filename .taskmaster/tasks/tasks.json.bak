@@ -791,7 +791,7 @@
       "id": 20,
       "title": "기본 UI/UX 구현 - 웹",
       "description": "Next.js 웹 애플리케이션의 핵심 사용자 인터페이스",
-      "status": "pending",
+      "status": "done",
       "priority": "medium",
       "dependencies": [
         4,
@@ -802,13 +802,87 @@
       ],
       "details": "로그인/회원가입 페이지, 레스토랑 목록, 메뉴 상세, 장바구니, 주문하기 페이지 구현",
       "testStrategy": "사용자 워크플로우 테스트, 반응형 디자인 확인, 접근성 검증",
-      "phase": "Phase 2"
+      "phase": "Phase 2",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "공통 UI 컴포넌트 라이브러리 구축",
+          "description": "재사용 가능한 UI 컴포넌트들 (Button, Input, Card, Modal 등) 구현",
+          "details": "Tailwind CSS와 Radix UI 기반으로 일관된 디자인 시스템 구축",
+          "status": "done",
+          "dependencies": [],
+          "parentTaskId": 20
+        },
+        {
+          "id": 2,
+          "title": "고객용 메인 페이지 및 레스토랑 검색",
+          "description": "홈페이지, 레스토랑 검색, 필터링, 카테고리 브라우징 UI 구현",
+          "details": "지도 기반 검색, 카테고리별 필터링, 평점/리뷰 표시 기능 포함",
+          "status": "done",
+          "dependencies": [],
+          "parentTaskId": 20
+        },
+        {
+          "id": 3,
+          "title": "메뉴 상세 및 주문 페이지",
+          "description": "레스토랑 메뉴, 상품 상세, 옵션 선택, 장바구니 UI 구현",
+          "details": "메뉴 옵션 선택, 수량 조절, 가격 계산, 장바구니 담기 기능",
+          "status": "done",
+          "dependencies": [],
+          "parentTaskId": 20
+        },
+        {
+          "id": 4,
+          "title": "주문 결제 및 주문 추적 페이지",
+          "description": "결제 프로세스, 주문 확인, 실시간 주문 상태 추적 UI 구현",
+          "details": "결제 수단 선택, 주소 입력, 실시간 상태 업데이트, 배달 추적 지도",
+          "status": "done",
+          "dependencies": [],
+          "parentTaskId": 20
+        },
+        {
+          "id": 5,
+          "title": "점주용 레스토랑 관리 대시보드",
+          "description": "점주가 레스토랑 정보, 메뉴, 주문을 관리할 수 있는 대시보드 UI",
+          "details": "레스토랑 정보 수정, 메뉴 CRUD, 주문 접수/처리, 매출 통계 화면",
+          "status": "done",
+          "dependencies": [],
+          "parentTaskId": 20
+        },
+        {
+          "id": 6,
+          "title": "관리자용 플랫폼 관리 페이지",
+          "description": "관리자가 전체 플랫폼을 관리할 수 있는 어드민 페이지 UI",
+          "details": "사용자 관리, 레스토랑 승인, 주문 모니터링, 시스템 통계 대시보드",
+          "status": "done",
+          "dependencies": [],
+          "parentTaskId": 20
+        },
+        {
+          "id": 7,
+          "title": "사용자 계정 및 프로필 관리 페이지",
+          "description": "로그인, 회원가입, 프로필 수정, 주문 히스토리 페이지 UI",
+          "details": "인증 폼, 프로필 편집, 주소 관리, 주문 내역, 리뷰 관리 화면",
+          "status": "done",
+          "dependencies": [],
+          "parentTaskId": 20
+        },
+        {
+          "id": 8,
+          "title": "반응형 디자인 및 UX 최적화",
+          "description": "모바일, 태블릿, 데스크톱 대응 반응형 디자인 및 사용성 개선",
+          "details": "Breakpoint 설정, 터치 최적화, 로딩 상태, 에러 핸들링, 접근성 개선",
+          "status": "done",
+          "dependencies": [],
+          "parentTaskId": 20
+        }
+      ]
     },
     {
       "id": 21,
       "title": "기본 UI/UX 구현 - 모바일",
       "description": "Expo 모바일 애플리케이션의 핵심 사용자 인터페이스",
-      "status": "pending",
+      "status": "done",
       "priority": "medium",
       "dependencies": [
         5,
@@ -954,7 +1028,7 @@
       "id": 25,
       "title": "푸시 알림 시스템",
       "description": "주요 이벤트에 대한 모바일/웹 푸시 알림",
-      "status": "pending",
+      "status": "done",
       "priority": "medium",
       "dependencies": [
         21,
@@ -1037,7 +1111,7 @@
       "id": 27,
       "title": "리뷰 및 평점 시스템",
       "description": "주문 완료 후 리뷰 작성 및 평점 관리",
-      "status": "pending",
+      "status": "done",
       "priority": "low",
       "dependencies": [
         15,
@@ -1045,13 +1119,14 @@
       ],
       "details": "리뷰 작성, 평점 등록, 이미지 첨부, 리뷰 신고, 평균 평점 계산",
       "testStrategy": "리뷰 작성 프로세스, 평점 계산 정확도, 이미지 업로드 확인",
-      "phase": "Phase 3"
+      "phase": "Phase 3",
+      "subtasks": []
     },
     {
       "id": 28,
       "title": "관리자 대시보드",
       "description": "플랫폼 관리를 위한 관리자 전용 대시보드",
-      "status": "pending",
+      "status": "done",
       "priority": "low",
       "dependencies": [
         11,
@@ -1137,7 +1212,7 @@
       "id": 30,
       "title": "배포 환경 구성",
       "description": "프로덕션 배포를 위한 인프라 설정",
-      "status": "pending",
+      "status": "done",
       "priority": "high",
       "dependencies": [
         29
@@ -1145,13 +1220,68 @@
       "details": "CI/CD 파이프라인, Docker 이미지 빌드, 환경별 설정, 도메인 연결, SSL 인증서",
       "testStrategy": "배포 프로세스 테스트, 환경별 동작 확인, SSL 연결 검증",
       "phase": "Phase 4",
-      "subtasks": []
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Docker 컨테이너화",
+          "description": "API, 웹, 모바일 앱을 위한 Docker 이미지 생성 및 최적화",
+          "details": "Dockerfile 작성, 멀티스테이지 빌드, 이미지 최적화, Docker Compose 설정",
+          "status": "done",
+          "dependencies": [],
+          "parentTaskId": 30
+        },
+        {
+          "id": 2,
+          "title": "CI/CD 파이프라인 구성",
+          "description": "GitHub Actions 또는 GitLab CI를 활용한 자동 빌드 및 배포 파이프라인",
+          "details": "자동 테스트, 빌드, 배포 스크립트 작성, 환경별 배포 전략",
+          "status": "done",
+          "dependencies": [],
+          "parentTaskId": 30
+        },
+        {
+          "id": 3,
+          "title": "환경 설정 관리",
+          "description": "개발, 스테이징, 프로덕션 환경별 설정 파일 및 환경 변수 관리",
+          "details": "환경별 .env 파일, 보안 정보 관리, 환경 분리 전략",
+          "status": "done",
+          "dependencies": [],
+          "parentTaskId": 30
+        },
+        {
+          "id": 4,
+          "title": "클라우드 인프라 설정",
+          "description": "AWS, GCP, Azure 등 클라우드 플랫폼에서의 서버 인프라 구성",
+          "details": "컴퓨팅 인스턴스, 로드밸런서, 데이터베이스, 스토리지 설정",
+          "status": "done",
+          "dependencies": [],
+          "parentTaskId": 30
+        },
+        {
+          "id": 5,
+          "title": "도메인 및 SSL 인증서 설정",
+          "description": "도메인 연결, SSL 인증서 설치 및 HTTPS 설정",
+          "details": "도메인 DNS 설정, Let's Encrypt 또는 유료 SSL 인증서, 리다이렉션 설정",
+          "status": "done",
+          "dependencies": [],
+          "parentTaskId": 30
+        },
+        {
+          "id": 6,
+          "title": "배포 자동화 및 모니터링",
+          "description": "배포 프로세스 자동화, 롤백 전략, 기본 모니터링 설정",
+          "details": "무중단 배포, 헬스체크, 배포 롤백, 로그 수집, 기본 알림 설정",
+          "status": "done",
+          "dependencies": [],
+          "parentTaskId": 30
+        }
+      ]
     },
     {
       "id": 31,
       "title": "보안 강화",
       "description": "프로덕션 환경 보안 설정 및 취약점 점검",
-      "status": "pending",
+      "status": "done",
       "priority": "high",
       "dependencies": [
         30
@@ -1164,7 +1294,7 @@
       "id": 32,
       "title": "모니터링 시스템",
       "description": "시스템 모니터링 및 로깅 설정",
-      "status": "pending",
+      "status": "done",
       "priority": "medium",
       "dependencies": [
         30,

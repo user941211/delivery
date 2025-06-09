@@ -1,6 +1,6 @@
 # Task ID: 25
 # Title: 푸시 알림 시스템
-# Status: pending
+# Status: done
 # Dependencies: 21, 22
 # Priority: medium
 # Description: 주요 이벤트에 대한 모바일/웹 푸시 알림

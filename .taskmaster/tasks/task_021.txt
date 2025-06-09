@@ -1,6 +1,6 @@
 # Task ID: 21
 # Title: 기본 UI/UX 구현 - 모바일
-# Status: pending
+# Status: done
 # Dependencies: 5, 9, 13, 14, 15
 # Priority: medium
 # Description: Expo 모바일 애플리케이션의 핵심 사용자 인터페이스

@@ -1,6 +1,6 @@
 # Task ID: 28
 # Title: 관리자 대시보드
-# Status: pending
+# Status: done
 # Dependencies: 11, 18, 27
 # Priority: low
 # Description: 플랫폼 관리를 위한 관리자 전용 대시보드

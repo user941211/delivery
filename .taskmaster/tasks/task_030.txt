@@ -1,6 +1,6 @@
 # Task ID: 30
 # Title: 배포 환경 구성
-# Status: in-progress
+# Status: done
 # Dependencies: 29
 # Priority: high
 # Description: 프로덕션 배포를 위한 인프라 설정
@@ -29,19 +29,19 @@ Dockerfile 작성, 멀티스테이지 빌드, 이미지 최적화, Docker Compos
 ### Details:
 환경별 .env 파일, 보안 정보 관리, 환경 분리 전략
 
-## 4. 클라우드 인프라 설정 [pending]
+## 4. 클라우드 인프라 설정 [done]
 ### Dependencies: None
 ### Description: AWS, GCP, Azure 등 클라우드 플랫폼에서의 서버 인프라 구성
 ### Details:
 컴퓨팅 인스턴스, 로드밸런서, 데이터베이스, 스토리지 설정
 
-## 5. 도메인 및 SSL 인증서 설정 [pending]
+## 5. 도메인 및 SSL 인증서 설정 [done]
 ### Dependencies: None
 ### Description: 도메인 연결, SSL 인증서 설치 및 HTTPS 설정
 ### Details:
 도메인 DNS 설정, Let's Encrypt 또는 유료 SSL 인증서, 리다이렉션 설정
 
-## 6. 배포 자동화 및 모니터링 [pending]
+## 6. 배포 자동화 및 모니터링 [done]
 ### Dependencies: None
 ### Description: 배포 프로세스 자동화, 롤백 전략, 기본 모니터링 설정
 ### Details:
