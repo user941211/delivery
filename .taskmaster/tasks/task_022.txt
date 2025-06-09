@@ -1,6 +1,6 @@
 # Task ID: 22
 # Title: 실시간 주문 상태 추적
-# Status: pending
+# Status: done
 # Dependencies: 6, 17, 19
 # Priority: high
 # Description: WebSocket 기반 실시간 주문 상태 업데이트 시스템
@@ -9,3 +9,29 @@ Socket.io 설정, 주문 상태 변경 이벤트 발송, 클라이언트 실시�
 
 # Test Strategy:
 실시간 업데이트 확인, 연결 끊김 처리, 다중 클라이언트 테스트
+
+# Subtasks:
+## 1. WebSocket 모듈 설정 [done]
+### Dependencies: None
+### Description: Socket.io를 사용한 WebSocket 서버 구성
+### Details:
+NestJS에 Socket.io 게이트웨이 모듈 설정, CORS 설정, 의존성 설치
+
+## 2. 실시간 이벤트 DTO 정의 [done]
+### Dependencies: None
+### Description: WebSocket 이벤트용 데이터 구조체 정의
+### Details:
+주문 상태 변경, 배달기사 위치 업데이트, 알림 메시지 등의 실시간 이벤트 DTO 구현
+
+## 3. 실시간 알림 서비스 구현 [done]
+### Dependencies: None
+### Description: WebSocket 이벤트 발송 로직 구현
+### Details:
+OrderTrackingGateway와 연동하여 실시간 이벤트를 적절한 사용자들에게 발송하는 서비스 구현
+
+## 4. 기존 시스템과 실시간 기능 통합 [done]
+### Dependencies: None
+### Description: 배달 시스템과 WebSocket 연동
+### Details:
+기존 배달 요청 서비스와 주문 서비스에 실시간 알림 기능을 통합하여 상태 변경 시 자동으로 WebSocket 이벤트가 발송되도록 구현
+

@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "composite": true,
     "outDir": "./dist",
@@ -23,11 +23,18 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@delivery-platform/shared": ["../../packages/shared/src"],
-      "@delivery-platform/ui": ["../../packages/ui/src"],
-      "@delivery-platform/database": ["../../packages/database/src"]
+      "@/components/*": ["./src/components/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/app/*": ["./src/app/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

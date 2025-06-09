@@ -1,0 +1,370 @@
+# Pull Request 검증 워크플로우
+name: PR Validation
+
+on:
+  pull_request:
+    branches: [main, develop]
+    types: [opened, synchronize, reopened]
+
+# 권한 설정
+permissions:
+  contents: read
+  pull-requests: write
+  security-events: write
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  # 변경 파일 분석
+  analyze-changes:
+    name: Analyze Changes
+    runs-on: ubuntu-latest
+    outputs:
+      api-changed: ${{ steps.changes.outputs.api }}
+      web-changed: ${{ steps.changes.outputs.web }}
+      mobile-changed: ${{ steps.changes.outputs.mobile }}
+      packages-changed: ${{ steps.changes.outputs.packages }}
+      config-changed: ${{ steps.changes.outputs.config }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect file changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            api:
+              - 'apps/api/**'
+              - 'packages/**'
+            web:
+              - 'apps/web/**'
+              - 'packages/**'
+            mobile:
+              - 'apps/mobile/**'
+              - 'packages/**'
+            packages:
+              - 'packages/**'
+            config:
+              - '*.json'
+              - '*.yml'
+              - '*.yaml'
+              - 'Dockerfile*'
+              - 'docker-compose*'
+              - '.github/workflows/**'
+
+  # 코드 품질 검사
+  code-quality:
+    name: Code Quality Check
+    runs-on: ubuntu-latest
+    needs: analyze-changes
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run ESLint with annotations
+        run: |
+          yarn lint --format=@microsoft/eslint-formatter-sarif --output-file eslint-results.sarif
+        continue-on-error: true
+
+      - name: Upload ESLint results
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: eslint-results.sarif
+          wait-for-processing: true
+
+      - name: Check TypeScript
+        run: yarn type-check
+
+      - name: Check code formatting
+        run: yarn format:check
+
+  # API 테스트 (변경사항이 있을 때만)
+  test-api:
+    name: Test API
+    runs-on: ubuntu-latest
+    needs: [analyze-changes, code-quality]
+    if: needs.analyze-changes.outputs.api-changed == 'true' || needs.analyze-changes.outputs.packages-changed == 'true'
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: delivery_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run API tests
+        run: yarn workspace @delivery-platform/api test
+        env:
+          DATABASE_URL: postgresql://postgres:testpass@localhost:5432/delivery_test
+          REDIS_URL: redis://localhost:6379
+          NODE_ENV: test
+
+      - name: Run API integration tests
+        run: yarn workspace @delivery-platform/api test:e2e
+        env:
+          DATABASE_URL: postgresql://postgres:testpass@localhost:5432/delivery_test
+          REDIS_URL: redis://localhost:6379
+          NODE_ENV: test
+
+  # 웹 앱 테스트 (변경사항이 있을 때만)
+  test-web:
+    name: Test Web App
+    runs-on: ubuntu-latest
+    needs: [analyze-changes, code-quality]
+    if: needs.analyze-changes.outputs.web-changed == 'true' || needs.analyze-changes.outputs.packages-changed == 'true'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run web app tests
+        run: yarn workspace @delivery-platform/web test
+        env:
+          NODE_ENV: test
+
+      - name: Build web app
+        run: yarn workspace @delivery-platform/web build
+        env:
+          NODE_ENV: production
+          NEXT_PUBLIC_API_URL: https://api.example.com
+
+  # 모바일 앱 테스트 (변경사항이 있을 때만)
+  test-mobile:
+    name: Test Mobile App
+    runs-on: ubuntu-latest
+    needs: [analyze-changes, code-quality]
+    if: needs.analyze-changes.outputs.mobile-changed == 'true' || needs.analyze-changes.outputs.packages-changed == 'true'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run mobile app tests
+        run: yarn workspace @delivery-platform/mobile test
+        env:
+          NODE_ENV: test
+
+  # 보안 스캔
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: analyze-changes
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Check for vulnerabilities
+        run: |
+          yarn install --frozen-lockfile
+          yarn audit --level high
+
+  # Docker 이미지 빌드 테스트
+  test-docker-build:
+    name: Test Docker Build
+    runs-on: ubuntu-latest
+    needs: [analyze-changes]
+    if: needs.analyze-changes.outputs.config-changed == 'true' || needs.analyze-changes.outputs.api-changed == 'true' || needs.analyze-changes.outputs.web-changed == 'true'
+    
+    strategy:
+      matrix:
+        app: [api, web]
+        
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Test Docker build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./apps/${{ matrix.app }}/Dockerfile
+          target: production
+          push: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # 성능 테스트 (API 변경 시)
+  performance-test:
+    name: Performance Test
+    runs-on: ubuntu-latest
+    needs: [analyze-changes, test-api]
+    if: needs.analyze-changes.outputs.api-changed == 'true'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run performance tests
+        run: |
+          # Lighthouse CI 또는 k6 성능 테스트 실행
+          echo "Performance tests would run here"
+
+  # PR 결과 요약
+  pr-summary:
+    name: PR Summary
+    runs-on: ubuntu-latest
+    needs: [test-api, test-web, test-mobile, security-scan, test-docker-build]
+    if: always()
+    
+    steps:
+      - name: Comment PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+            });
+
+            const results = {
+              'API Tests': '${{ needs.test-api.result }}',
+              'Web Tests': '${{ needs.test-web.result }}',
+              'Mobile Tests': '${{ needs.test-mobile.result }}',
+              'Security Scan': '${{ needs.security-scan.result }}',
+              'Docker Build': '${{ needs.test-docker-build.result }}'
+            };
+
+            let summary = '## 🔍 PR Validation Results\n\n';
+            
+            for (const [test, result] of Object.entries(results)) {
+              const icon = result === 'success' ? '✅' : result === 'failure' ? '❌' : result === 'skipped' ? '⏭️' : '⚠️';
+              summary += `${icon} **${test}**: ${result}\n`;
+            }
+
+            summary += '\n---\n';
+            summary += '*This comment was automatically generated by the PR validation workflow.*';
+
+            github.rest.issues.createComment({
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: summary
+            });
+
+  # 자동 라벨링
+  auto-label:
+    name: Auto Label
+    runs-on: ubuntu-latest
+    needs: analyze-changes
+    if: always()
+    
+    steps:
+      - name: Add labels based on changes
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labels = [];
+            
+            if ('${{ needs.analyze-changes.outputs.api-changed }}' === 'true') {
+              labels.push('api');
+            }
+            if ('${{ needs.analyze-changes.outputs.web-changed }}' === 'true') {
+              labels.push('web');
+            }
+            if ('${{ needs.analyze-changes.outputs.mobile-changed }}' === 'true') {
+              labels.push('mobile');
+            }
+            if ('${{ needs.analyze-changes.outputs.packages-changed }}' === 'true') {
+              labels.push('packages');
+            }
+            if ('${{ needs.analyze-changes.outputs.config-changed }}' === 'true') {
+              labels.push('config');
+            }
+
+            if (labels.length > 0) {
+              github.rest.issues.addLabels({
+                issue_number: context.payload.pull_request.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: labels
+              });
+            } 

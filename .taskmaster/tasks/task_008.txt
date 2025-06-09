@@ -1,6 +1,6 @@
 # Task ID: 8
 # Title: 공통 타입 및 유틸리티 패키지
-# Status: pending
+# Status: done
 # Dependencies: 7
 # Priority: medium
 # Description: 프론트엔드와 백엔드에서 공유할 타입 정의 및 유틸리티 함수 작성

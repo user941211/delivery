@@ -1,6 +1,6 @@
 # Task ID: 24
 # Title: 채팅 시스템
-# Status: pending
+# Status: done
 # Dependencies: 22
 # Priority: medium
 # Description: 주문별 고객-점주-배달기사 간 실시간 채팅
@@ -9,3 +9,29 @@
 
 # Test Strategy:
 실시간 메시지 전송 확인, 메시지 순서 보장, 이미지 업로드 테스트
+
+# Subtasks:
+## 1. 채팅 DTO 및 엔티티 설계 [done]
+### Dependencies: None
+### Description: 채팅방, 메시지, 참가자 데이터 구조 정의
+### Details:
+채팅방 생성/관리, 메시지 전송/수신, 파일 첨부, 읽음 상태 관리를 위한 DTO와 엔티티 구현
+
+## 2. 채팅룸 관리 서비스 [done]
+### Dependencies: None
+### Description: 채팅방 생성, 참가자 관리, 설정 관리 서비스 구현
+### Details:
+ChatRoomService를 구현하여 채팅방 CRUD, 참가자 추가/제거, 채팅방 설정, 권한 관리 기능을 제공
+
+## 3. 실시간 메시지 서비스 [done]
+### Dependencies: None
+### Description: 메시지 전송, 수신, 읽음 상태 관리 서비스 구현
+### Details:
+MessageService와 ChatGateway를 구현하여 실시간 메시지 전송, 메시지 히스토리 관리, 읽음 상태 추적, 파일 첨부 기능을 제공
+
+## 4. 채팅 컨트롤러 및 모듈 통합 [done]
+### Dependencies: None
+### Description: 채팅 API 컨트롤러 구현 및 시스템 통합
+### Details:
+ChatController 및 ChatModule을 구현하여 REST API 엔드포인트를 제공하고, 기존 시스템과의 통합을 완료
+

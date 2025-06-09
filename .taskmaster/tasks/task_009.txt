@@ -1,6 +1,6 @@
 # Task ID: 9
 # Title: 사용자 인증 시스템
-# Status: pending
+# Status: done
 # Dependencies: 6, 7, 8
 # Priority: high
 # Description: JWT 기반 사용자 인증 및 권한 관리 시스템 구현
@@ -9,3 +9,50 @@
 
 # Test Strategy:
 각 역할별 회원가입/로그인 테스트, 토큰 유효성 검증, 권한별 API 접근 테스트
+
+# Subtasks:
+## 1. JWT 토큰 서비스 구현 [done]
+### Dependencies: None
+### Description: JWT 토큰 생성, 검증, 갱신 기능을 포함한 토큰 서비스 모듈 구현
+### Details:
+- JWT 토큰 생성 및 검증 로직
+- 액세스 토큰과 리프레시 토큰 관리
+- 토큰 만료 처리
+- 보안 키 관리
+
+## 2. 회원가입 API 구현 [done]
+### Dependencies: None
+### Description: 사용자 역할별 회원가입 엔드포인트 및 검증 로직 구현
+### Details:
+- 고객, 배달원, 점주 역할별 회원가입 처리
+- 이메일/전화번호 중복 검증
+- 비밀번호 해시화
+- 계정 활성화 프로세스
+
+## 3. 로그인 API 구현 [done]
+### Dependencies: None
+### Description: 사용자 인증 및 JWT 토큰 발급 로그인 엔드포인트 구현
+### Details:
+- 이메일/전화번호 + 비밀번호 인증
+- JWT 토큰 발급
+- 로그인 시도 제한 및 보안 처리
+- 다중 기기 로그인 지원
+
+## 4. 역할 기반 접근 제어 가드 [done]
+### Dependencies: None
+### Description: Nest.js 가드를 사용한 역할별 API 접근 권한 관리 시스템 구현
+### Details:
+- AuthGuard 및 RolesGuard 구현
+- 고객/배달원/점주 권한 분리
+- 보호된 엔드포인트 설정
+- 권한 검증 데코레이터
+
+## 5. 토큰 갱신 및 로그아웃 [done]
+### Dependencies: None
+### Description: 리프레시 토큰을 통한 액세스 토큰 갱신 및 안전한 로그아웃 구현
+### Details:
+- 리프레시 토큰을 통한 액세스 토큰 갱신
+- 로그아웃 시 토큰 무효화
+- 토큰 블랙리스트 관리
+- 자동 토큰 갱신 로직
+

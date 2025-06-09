@@ -1,6 +1,6 @@
 # Task ID: 5
 # Title: Expo 모바일 프로젝트 설정
-# Status: pending
+# Status: done
 # Dependencies: 1
 # Priority: medium
 # Description: Expo React Native 기반 모바일 애플리케이션 초기 설정

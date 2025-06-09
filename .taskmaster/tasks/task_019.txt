@@ -1,6 +1,6 @@
 # Task ID: 19
 # Title: 기본 배달 배정 시스템
-# Status: pending
+# Status: done
 # Dependencies: 17, 18
 # Priority: high
 # Description: 주문과 배달기사 간의 기본적인 매칭 시스템
@@ -9,3 +9,35 @@
 
 # Test Strategy:
 배달기사 매칭 로직 테스트, 요청/응답 처리 확인
+
+# Subtasks:
+## 1. 배달 요청 DTO 및 엔티티 정의 [done]
+### Dependencies: None
+### Description: 배달 배정을 위한 데이터 구조 정의
+### Details:
+배달 요청, 배달기사 위치, 배정 상태 등의 DTO와 엔티티 정의
+
+## 2. 배달기사 위치 추적 서비스 [done]
+### Dependencies: None
+### Description: 배달기사의 실시간 위치를 추적하고 관리하는 서비스
+### Details:
+배달기사 위치 저장, 업데이트, 조회 기능 및 활성 상태 관리
+
+## 3. 거리 기반 매칭 알고리즘 [done]
+### Dependencies: None
+### Description: 주문 위치와 배달기사 위치를 기반으로 최적의 매칭을 찾는 알고리즘
+### Details:
+Haversine 공식을 사용한 거리 계산, 가까운 배달기사 필터링, 우선순위 정렬
+
+## 4. 배달 요청 관리 서비스 [done]
+### Dependencies: None
+### Description: 배달 요청 생성, 상태 관리, 배달기사 매칭 및 알림 기능
+### Details:
+배달 요청 생성, 배달기사 찾기, 요청 전송, 수락/거부 처리, 상태 업데이트
+
+## 5. 배달 배정 컨트롤러 [done]
+### Dependencies: None
+### Description: 배달 배정 시스템의 API 엔드포인트 제공
+### Details:
+수동 배정, 자동 배정, 요청 상태 조회, 배달기사 응답 처리 등의 REST API
+

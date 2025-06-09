@@ -1,6 +1,6 @@
 # Task ID: 23
 # Title: 실시간 위치 추적 시스템
-# Status: pending
+# Status: done
 # Dependencies: 19, 22
 # Priority: high
 # Description: 배달기사 위치 실시간 추적 및 고객 공유
@@ -9,3 +9,11 @@ GPS 위치 수집, 실시간 위치 전송, 지도 표시, 예상 도착 시간 
 
 # Test Strategy:
 위치 업데이트 정확도, 실시간 전송 확인, 지도 표시 테스트
+
+# Subtasks:
+## 1. GPS 위치 수집 API [done]
+### Dependencies: None
+### Description: 배달기사 위치 수집 및 저장 시스템
+### Details:
+GPS 좌표 수신, 유효성 검증, 데이터베이스 저장, 위치 정확도 관리
+

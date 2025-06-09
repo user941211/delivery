@@ -1,0 +1,187 @@
+# 개발 환경용 Docker Compose 설정
+version: '3.8'
+
+services:
+  # PostgreSQL 데이터베이스 (개발용)
+  postgres-dev:
+    image: postgres:15-alpine
+    container_name: delivery-postgres-dev
+    environment:
+      POSTGRES_DB: delivery_platform_dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: devpassword
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+      - ./database/seed:/docker-entrypoint-initdb.d/seed
+    ports:
+      - "5433:5432"
+    networks:
+      - delivery-dev-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis 캐시 서버 (개발용)
+  redis-dev:
+    image: redis:7-alpine
+    container_name: delivery-redis-dev
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_dev_data:/data
+    ports:
+      - "6380:6379"
+    networks:
+      - delivery-dev-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # API 서버 (개발용 - 핫 리로드)
+  api-dev:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: builder
+    container_name: delivery-api-dev
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - DATABASE_URL=postgresql://postgres:devpassword@postgres-dev:5432/delivery_platform_dev
+      - REDIS_URL=redis://redis-dev:6379
+      - JWT_SECRET=dev-jwt-secret-key
+      - JWT_REFRESH_SECRET=dev-jwt-refresh-secret-key
+    ports:
+      - "3000:3000"
+      - "9229:9229" # 디버깅 포트
+    volumes:
+      - ./apps/api:/app/apps/api
+      - ./packages:/app/packages
+      - /app/node_modules
+      - /app/apps/api/node_modules
+    depends_on:
+      postgres-dev:
+        condition: service_healthy
+      redis-dev:
+        condition: service_healthy
+    networks:
+      - delivery-dev-network
+    command: ["yarn", "start:debug"]
+    restart: unless-stopped
+
+  # 웹 애플리케이션 (개발용 - 핫 리로드)
+  web-dev:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      target: deps
+    container_name: delivery-web-dev
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - NEXT_PUBLIC_API_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=dev-nextauth-secret
+      - NEXTAUTH_URL=http://localhost:3001
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./apps/web:/app/apps/web
+      - ./packages:/app/packages
+      - /app/node_modules
+      - /app/apps/web/node_modules
+      - /app/apps/web/.next
+    depends_on:
+      - api-dev
+    networks:
+      - delivery-dev-network
+    working_dir: /app/apps/web
+    command: ["yarn", "dev"]
+    restart: unless-stopped
+
+  # 모바일 앱 개발 서버 (Expo)
+  mobile-dev:
+    build:
+      context: .
+      dockerfile: apps/mobile/Dockerfile.dev
+    container_name: delivery-mobile-dev
+    environment:
+      - NODE_ENV=development
+      - EXPO_DEVTOOLS_LISTEN_ADDRESS=0.0.0.0
+    ports:
+      - "19000:19000" # Expo DevTools
+      - "19001:19001" # Expo Metro
+      - "19002:19002" # Expo Tunnel
+    volumes:
+      - ./apps/mobile:/app/apps/mobile
+      - ./packages:/app/packages
+      - /app/node_modules
+      - /app/apps/mobile/node_modules
+    networks:
+      - delivery-dev-network
+    working_dir: /app/apps/mobile
+    command: ["yarn", "start"]
+    restart: unless-stopped
+
+  # 데이터베이스 관리 도구 (pgAdmin)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: delivery-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@delivery.com
+      PGADMIN_DEFAULT_PASSWORD: adminpassword
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres-dev
+    networks:
+      - delivery-dev-network
+    restart: unless-stopped
+
+  # Redis 관리 도구
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: delivery-redis-commander
+    environment:
+      - REDIS_HOSTS=dev:redis-dev:6379
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis-dev
+    networks:
+      - delivery-dev-network
+    restart: unless-stopped
+
+  # 메일 서버 (개발용 - MailHog)
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: delivery-mailhog
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web UI
+    networks:
+      - delivery-dev-network
+    restart: unless-stopped
+
+# 네트워크 설정
+networks:
+  delivery-dev-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
+
+# 볼륨 설정
+volumes:
+  postgres_dev_data:
+    driver: local
+  redis_dev_data:
+    driver: local
+  pgadmin_data:
+    driver: local 

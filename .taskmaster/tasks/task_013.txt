@@ -1,6 +1,6 @@
 # Task ID: 13
 # Title: 고객용 레스토랑 검색
-# Status: pending
+# Status: done
 # Dependencies: 11, 12
 # Priority: high
 # Description: 위치 기반 레스토랑 검색 및 필터링 기능 구현
@@ -9,3 +9,29 @@
 
 # Test Strategy:
 검색 API 테스트, 필터링 로직 검증, 거리 계산 정확도 확인
+
+# Subtasks:
+## 1. 검색 및 필터 DTO 구현 [done]
+### Dependencies: None
+### Description: 레스토랑 검색을 위한 DTO와 필터링 옵션 정의
+### Details:
+검색 쿼리, 위치 정보, 카테고리 필터, 가격대 필터, 평점 필터, 거리 필터, 정렬 옵션 등을 포함한 포괄적인 DTO 구현
+
+## 2. 레스토랑 검색 서비스 구현 [done]
+### Dependencies: None
+### Description: 위치 기반 검색, 필터링, 정렬 로직을 포함한 검색 서비스
+### Details:
+지리적 위치 계산, 카테고리 필터링, 가격대 필터링, 평점 기반 정렬, 거리 계산, 영업 상태 확인 등의 핵심 검색 로직 구현
+
+## 3. 검색 결과 응답 DTO 및 포맷팅 [done]
+### Dependencies: None
+### Description: 검색 결과를 클라이언트에 전달하기 위한 응답 DTO 구현
+### Details:
+레스토랑 기본 정보, 거리 정보, 평점, 영업 상태, 대표 이미지, 페이지네이션 정보 등을 포함한 검색 결과 응답 형식 정의
+
+## 4. 검색 API 엔드포인트 구현 [done]
+### Dependencies: None
+### Description: 고객용 레스토랑 검색 API 엔드포인트 구현
+### Details:
+검색 컨트롤러 생성, API 문서화, 에러 핸들링, 성능 최적화를 포함한 완전한 검색 엔드포인트 구현
+

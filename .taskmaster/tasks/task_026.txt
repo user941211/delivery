@@ -1,6 +1,6 @@
 # Task ID: 26
 # Title: 고급 결제 시스템
-# Status: pending
+# Status: done
 # Dependencies: 16
 # Priority: medium
 # Description: 다양한 결제 수단 및 할인/쿠폰 시스템
@@ -9,3 +9,41 @@
 
 # Test Strategy:
 다양한 결제 방식 테스트, 할인 계산 검증, 환불 프로세스 확인
+
+# Subtasks:
+## 1. 간편결제 연동 시스템 [done]
+### Dependencies: None
+### Description: 카카오페이, 토스페이, 네이버페이 등 주요 PG사와의 연동 시스템 구축
+### Details:
+PG사별 API 연동, 결제 요청/응답 처리, 결제 상태 관리, 웹훅 처리, 결제 실패 시 재시도 로직
+
+## 2. 쿠폰 및 할인 시스템 [done]
+### Dependencies: None
+### Description: 쿠폰 생성, 관리, 적용 및 할인 계산 시스템
+### Details:
+쿠폰 DTO 설계, 쿠폰 생성/수정/삭제 API, 유효성 검증, 할인 계산 로직, 중복 적용 방지, 사용 내역 추적
+
+## 3. 포인트 적립 및 사용 시스템 [done]
+### Dependencies: None
+### Description: 주문 시 포인트 적립 및 결제 시 포인트 사용 시스템
+### Details:
+포인트 적립 규칙 설정, 포인트 사용 로직, 포인트 내역 관리, 포인트 만료 처리, 포인트 환불 처리
+
+## 4. 부분 환불 및 취소 시스템 [done]
+### Dependencies: None
+### Description: 주문 취소 및 부분 환불 처리 시스템
+### Details:
+환불 요청 처리, 부분 환불 계산, PG사 환불 API 연동, 환불 상태 관리, 환불 내역 추적, 자동 환불 처리
+
+## 5. 정기 결제 및 구독 시스템 [done]
+### Dependencies: None
+### Description: 정기 주문 및 구독 서비스를 위한 자동 결제 시스템
+### Details:
+구독 계획 설정, 정기 결제 스케줄링, 결제 실패 시 재시도, 구독 일시정지/취소, 구독 상태 관리
+
+## 6. 결제 보안 및 로깅 시스템 [done]
+### Dependencies: None
+### Description: 결제 보안 강화 및 종합적인 로깅/모니터링 시스템
+### Details:
+결제 데이터 암호화, 이상 거래 탐지, 결제 로그 관리, 보안 감사, 결제 분석 대시보드, 알림 시스템
+

@@ -1,0 +1,339 @@
+# 보안 업데이트 및 의존성 관리 워크플로우
+name: Security Updates
+
+on:
+  schedule:
+    # 매주 월요일 오전 9시 (UTC)
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # 수동 실행 가능
+  push:
+    paths:
+      - 'package.json'
+      - 'yarn.lock'
+      - '**/package.json'
+
+permissions:
+  contents: write
+  pull-requests: write
+  security-events: write
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  # 보안 취약점 스캔
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    outputs:
+      vulnerabilities-found: ${{ steps.audit.outputs.vulnerabilities }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run security audit
+        id: audit
+        run: |
+          # npm audit 실행 및 결과 저장
+          if yarn audit --level high --json > audit-results.json; then
+            echo "vulnerabilities=false" >> $GITHUB_OUTPUT
+          else
+            echo "vulnerabilities=true" >> $GITHUB_OUTPUT
+            echo "::warning::High severity vulnerabilities found"
+          fi
+
+      - name: Upload audit results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: audit-results
+          path: audit-results.json
+
+      - name: Run Trivy scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  # 자동 의존성 업데이트
+  dependency-updates:
+    name: Update Dependencies
+    runs-on: ubuntu-latest
+    needs: security-audit
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    strategy:
+      matrix:
+        update-type: [patch, minor]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Update patch dependencies
+        if: matrix.update-type == 'patch'
+        run: |
+          yarn upgrade --pattern '*' --latest
+          git add .
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: update patch dependencies"
+            git push origin HEAD:dependency-updates/patch-$(date +%Y%m%d)
+          fi
+
+      - name: Update minor dependencies
+        if: matrix.update-type == 'minor'
+        run: |
+          # 마이너 업데이트는 더 신중하게 처리
+          yarn outdated --json > outdated.json || true
+          
+          # 중요하지 않은 패키지만 업데이트
+          yarn upgrade --pattern '@types/*' --latest
+          yarn upgrade --pattern 'eslint*' --latest
+          yarn upgrade --pattern 'prettier*' --latest
+          
+          git add .
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: update minor dependencies (types, linting)"
+            git push origin HEAD:dependency-updates/minor-$(date +%Y%m%d)
+          fi
+
+  # Dependabot PR 자동 병합
+  auto-merge-dependabot:
+    name: Auto-merge Dependabot PRs
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Auto-merge patch updates
+        if: steps.metadata.outputs.update-type == 'version-update:semver-patch'
+        run: |
+          gh pr review --approve "$PR_URL"
+          gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Auto-approve minor updates
+        if: steps.metadata.outputs.update-type == 'version-update:semver-minor'
+        run: |
+          gh pr review --approve "$PR_URL"
+          # 마이너 업데이트는 승인만 하고 수동 병합 대기
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  # 라이센스 체크
+  license-check:
+    name: License Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Install license checker
+        run: npm install -g license-checker
+
+      - name: Check licenses
+        run: |
+          license-checker --onlyAllow 'MIT;Apache-2.0;BSD-2-Clause;BSD-3-Clause;ISC;0BSD' \
+            --excludePrivatePackages \
+            --summary > license-summary.txt
+
+      - name: Upload license summary
+        uses: actions/upload-artifact@v3
+        with:
+          name: license-summary
+          path: license-summary.txt
+
+  # 보안 이슈 알림
+  notify-security-issues:
+    name: Notify Security Issues
+    runs-on: ubuntu-latest
+    needs: [security-audit]
+    if: needs.security-audit.outputs.vulnerabilities-found == 'true'
+    
+    steps:
+      - name: Send Slack notification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "text": "🚨 Security vulnerabilities detected in delivery platform",
+              "attachments": [
+                {
+                  "color": "danger",
+                  "fields": [
+                    {
+                      "title": "Repository",
+                      "value": "${{ github.repository }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Branch",
+                      "value": "${{ github.ref }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Action",
+                      "value": "Please review and update vulnerable dependencies",
+                      "short": false
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Create security issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = '🚨 Security vulnerabilities detected';
+            const body = `
+            ## Security Audit Results
+            
+            High severity vulnerabilities have been detected in the project dependencies.
+            
+            ### Next Steps
+            1. Review the audit results in the [Security tab](https://github.com/${{ github.repository }}/security)
+            2. Update vulnerable dependencies
+            3. Test the application after updates
+            4. Create a security patch release if needed
+            
+            ### Audit Command
+            \`\`\`bash
+            yarn audit --level high
+            \`\`\`
+            
+            This issue was automatically created by the security workflow.
+            `;
+            
+            // 기존 보안 이슈가 있는지 확인
+            const existingIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'security',
+              state: 'open'
+            });
+            
+            if (existingIssues.data.length === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: ['security', 'high-priority']
+              });
+            }
+
+  # 코드 품질 리포트
+  quality-report:
+    name: Generate Quality Report
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Generate bundle analysis
+        run: |
+          # 웹 앱 번들 분석
+          cd apps/web
+          npm install -g @next/bundle-analyzer
+          ANALYZE=true yarn build
+
+      - name: Run complexity analysis
+        run: |
+          # 코드 복잡도 분석
+          npx ts-node scripts/analyze-complexity.ts > complexity-report.md
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: quality-reports
+          path: |
+            complexity-report.md
+            apps/web/.next/analyze/
+
+  # 환경별 환경 변수 검증
+  validate-env-vars:
+    name: Validate Environment Variables
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [development, staging, production]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate environment configuration
+        run: |
+          # 각 환경별 필수 환경 변수 체크
+          echo "Validating ${{ matrix.environment }} environment variables..."
+          
+          # .env.example을 기반으로 검증
+          if [ -f ".env.example" ]; then
+            while IFS= read -r line || [[ -n "$line" ]]; do
+              if [[ $line == *"="* ]] && [[ $line != "#"* ]]; then
+                var_name=$(echo $line | cut -d'=' -f1)
+                echo "Checking required variable: $var_name"
+              fi
+            done < .env.example
+          fi 

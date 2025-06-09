@@ -1,0 +1,25 @@
+# 캐시 시스템 환경 설정
+# Redis 서버가 사용 가능하지 않은 경우 로컬 메모리 캐시로 자동 폴백됩니다.
+
+# Redis 서버 설정
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD=
+REDIS_DB=0
+REDIS_KEY_PREFIX=delivery:
+
+# 캐시 기본 설정
+CACHE_DEFAULT_TTL=300
+CACHE_MAX_MEMORY_SIZE=128mb
+CACHE_CLEANUP_INTERVAL=300000
+
+# 성능 모니터링
+CACHE_PERFORMANCE_LOGGING=true
+CACHE_METRICS_ENABLED=true
+
+# 보안 설정
+CACHE_ENCRYPTION_KEY=your-cache-encryption-key-here
+
+# 개발 환경 설정
+NODE_ENV=development
+ENABLE_CACHE_DEBUGGING=true 

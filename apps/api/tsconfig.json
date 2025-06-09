@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "composite": true,
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -20,6 +19,10 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "moduleResolution": "node",
+    "lib": ["ES2021"],
+    "types": ["node"],
+    "esModuleInterop": true,
+    "noEmit": false,
     "paths": {
       "@/*": ["./src/*"],
       "@delivery-platform/shared": ["../../packages/shared/src"],

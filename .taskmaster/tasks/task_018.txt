@@ -1,6 +1,6 @@
 # Task ID: 18
 # Title: 배달기사 등록 시스템
-# Status: pending
+# Status: done
 # Dependencies: 9, 10
 # Priority: medium
 # Description: 배달기사 신청 및 승인 프로세스 구현
@@ -9,3 +9,29 @@
 
 # Test Strategy:
 신청 프로세스 테스트, 서류 업로드 확인, 승인/거부 워크플로우
+
+# Subtasks:
+## 1. 배달기사 신청 DTO 및 엔티티 정의 [done]
+### Dependencies: None
+### Description: 배달기사 신청서 작성을 위한 데이터 구조와 데이터베이스 엔티티 정의
+### Details:
+배달기사 신청서 DTO, 차량 정보 DTO, 서류 업로드 DTO, 배달기사 엔티티, 차량 엔티티, 배달 구역 엔티티 등을 정의
+
+## 2. 배달기사 신청 서비스 [done]
+### Dependencies: 18.1
+### Description: 배달기사 신청, 서류 업로드, 상태 관리 등의 비즈니스 로직 구현
+### Details:
+신청서 작성, 서류 업로드 처리, 신청 상태 관리, 배달 구역 설정, 차량 정보 관리 등의 서비스 로직
+
+## 3. 관리자 승인 시스템 [done]
+### Dependencies: 18.2
+### Description: 관리자가 배달기사 신청을 검토하고 승인/거부할 수 있는 시스템
+### Details:
+신청서 검토 인터페이스, 서류 확인, 승인/거부 처리, 거부 사유 관리, 알림 발송 등
+
+## 4. 배달기사 신청 API 컨트롤러 [done]
+### Dependencies: 18.2
+### Description: 배달기사 신청 관련 REST API 엔드포인트 구현
+### Details:
+신청서 제출, 서류 업로드, 신청 상태 조회, 배달 구역 설정 등의 API 엔드포인트
+

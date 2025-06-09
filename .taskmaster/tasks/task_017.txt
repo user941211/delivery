@@ -1,6 +1,6 @@
 # Task ID: 17
 # Title: 점주용 주문 관리
-# Status: pending
+# Status: done
 # Dependencies: 15, 16
 # Priority: high
 # Description: 점주가 주문을 확인하고 처리할 수 있는 시스템
@@ -9,3 +9,29 @@
 
 # Test Strategy:
 주문 처리 워크플로우 테스트, 상태 변경 알림 확인
+
+# Subtasks:
+## 1. 점주용 주문 관리 DTO 및 인터페이스 정의 [done]
+### Dependencies: None
+### Description: 점주 전용 주문 관리를 위한 데이터 구조와 인터페이스 정의
+### Details:
+점주용 주문 조회 DTO, 주문 상태 업데이트 DTO, 주문 처리 시간 설정 DTO, 주문 거부 DTO, 주문 통계 DTO 등을 정의
+
+## 2. 점주용 주문 처리 서비스 [done]
+### Dependencies: 17.1
+### Description: 주문 접수, 조리 시간 설정, 상태 업데이트, 거부 처리 등 점주용 비즈니스 로직
+### Details:
+점주별 주문 조회, 주문 상태 워크플로우 관리, 조리 시간 추정 및 설정, 주문 거부 및 사유 처리, 주문 통계 집계
+
+## 3. 점주용 주문 관리 API 컨트롤러 [done]
+### Dependencies: 17.2
+### Description: 점주 전용 주문 관리 REST API 엔드포인트 구현
+### Details:
+점주 인증 기반 주문 조회, 주문 상태 업데이트, 조리 시간 설정, 주문 거부, 주문 통계 조회 등 API 엔드포인트
+
+## 4. 실시간 주문 알림 시스템 [done]
+### Dependencies: 17.3
+### Description: WebSocket을 통한 실시간 주문 접수 및 상태 변경 알림
+### Details:
+새 주문 접수 알림, 주문 상태 변경 알림, 결제 상태 변경 알림, 점주별 실시간 구독 관리
+

@@ -1,6 +1,6 @@
 # Task ID: 4
 # Title: Next.js 웹 프로젝트 설정
-# Status: pending
+# Status: done
 # Dependencies: 1
 # Priority: medium
 # Description: Next.js 14+ App Router 기반 웹 애플리케이션 초기 설정

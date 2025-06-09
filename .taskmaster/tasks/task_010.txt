@@ -1,6 +1,6 @@
 # Task ID: 10
 # Title: 사용자 프로필 관리
-# Status: pending
+# Status: done
 # Dependencies: 9
 # Priority: medium
 # Description: 사용자 정보 등록, 수정, 조회 기능 구현
@@ -9,3 +9,41 @@
 
 # Test Strategy:
 프로필 생성/수정/조회 API 테스트, 이미지 업로드 기능 확인
+
+# Subtasks:
+## 1. 사용자 프로필 서비스 구현 [done]
+### Dependencies: None
+### Description: 사용자 프로필 CRUD 기능을 담당하는 서비스 모듈 구현
+### Details:
+- 프로필 조회, 수정, 삭제 로직
+- 사용자 정보 검증 및 업데이트
+- 프로필 이미지 관리
+- 개인정보 보호 처리
+
+## 2. 주소 관리 시스템 [done]
+### Dependencies: None
+### Description: 사용자 배달 주소 등록, 수정, 삭제 및 기본 주소 설정 기능 구현
+### Details:
+- 배달 주소 CRUD 기능
+- 기본 주소 설정/변경
+- 주소 검증 및 지오코딩
+- 배달 가능 지역 확인
+
+## 3. 파일 업로드 서비스 [done]
+### Dependencies: None
+### Description: 프로필 이미지 및 문서 파일 업로드 기능 구현
+### Details:
+- 이미지 파일 업로드 및 압축
+- 파일 형식 및 크기 검증
+- Supabase Storage 연동
+- 임시 파일 정리 및 보안 처리
+
+## 4. 프로필 API 엔드포인트 [done]
+### Dependencies: None
+### Description: 사용자 프로필 관리를 위한 REST API 엔드포인트 구현
+### Details:
+- 프로필 조회/수정 API
+- 주소 관리 API
+- 파일 업로드 API
+- API 문서화 및 검증
+

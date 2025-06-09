@@ -1,6 +1,6 @@
 # Task ID: 16
 # Title: 기본 결제 시스템
-# Status: pending
+# Status: done
 # Dependencies: 15
 # Priority: high
 # Description: 토스페이먼츠 연동을 통한 기본 결제 기능
@@ -9,3 +9,29 @@
 
 # Test Strategy:
 테스트 결제 실행, 성공/실패 시나리오 검증, 결제 내역 확인
+
+# Subtasks:
+## 1. 결제 DTO 및 인터페이스 정의 [done]
+### Dependencies: None
+### Description: 토스페이먼츠 API와 결제 프로세스를 위한 DTO 클래스들과 인터페이스 정의
+### Details:
+결제 요청 DTO, 결제 승인 DTO, 결제 콜백 DTO, 환불 DTO 등 토스페이먼츠 API 스펙에 맞는 데이터 구조 정의
+
+## 2. 토스페이먼츠 API 연동 서비스 [done]
+### Dependencies: 16.1
+### Description: 토스페이먼츠 REST API와 연동하는 서비스 로직 구현
+### Details:
+결제 요청, 결제 승인, 결제 취소, 환불 등 토스페이먼츠 API 호출 및 응답 처리 로직
+
+## 3. 결제 프로세스 관리 서비스 [done]
+### Dependencies: 16.2
+### Description: 결제 상태 관리, 주문과의 연동, 결제 이력 저장 등 비즈니스 로직
+### Details:
+결제 상태 추적, 주문 상태 업데이트, 결제 실패 처리, 재결제 로직, 데이터베이스 연동
+
+## 4. 결제 API 엔드포인트 [done]
+### Dependencies: 16.3
+### Description: 결제 관련 REST API 엔드포인트 구현
+### Details:
+결제 요청, 결제 승인 콜백, 결제 취소, 결제 이력 조회 등 API 컨트롤러 구현
+
